@@ -5,6 +5,44 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="70dp"
+        android:orientation="horizontal"
+        android:id="@+id/numberLayout">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Liczba"
+            android:textSize="17sp"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:id="@+id/number"/>
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:text="Sprawdź!"
+        android:layout_below="@id/numberLayout"
+        android:id="@+id/button"
+        android:onClick="checkNumber"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginTop="30dp"
+        android:text="Twoja liczba:"
+        android:id="@+id/score"
+        android:textSize="20sp"
+        android:layout_below="@id/button"/>
 
 </RelativeLayout>
