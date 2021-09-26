@@ -7,7 +7,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Vector;
+
 public class MainActivity extends AppCompatActivity {
+
+    private boolean isPrimeNum(int num) {
+        for(int i = 2; i <= (int)Math.sqrt(num); i++) {
+            if(num % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,11 +27,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkNumber(View view) {
-        EditText numberObj = (EditText) findViewById(R.id.number);
-        TextView scoreObj = (TextView) findViewById(R.id.score);
+        EditText numberObj = findViewById(R.id.number);
+        TextView scoreObj = findViewById(R.id.score);
 
         try {
-            int number = Integer.parseInt(numberObj.getText().toString());
+            if(numberObj.getText().toString().trim().charAt(0) == '0') {
+                throw new Exception("Twoja liczba nie może zaczynać się od 0!");
+            }
+
+            int number = Integer.parseInt(numberObj.getText().toString().trim());
 
             if(number <= 0) {
                 throw new Exception("Twoja liczba musi być większa niż 0!");
@@ -29,17 +44,12 @@ public class MainActivity extends AppCompatActivity {
             boolean czyPierwsza = true;
             boolean czyParzysta = true;
             boolean czyDoskonala = false;
-            boolean czyPalindromiczna = true;
-            boolean czySfeniczna = true;
+            boolean czyPalindromiczna = false;
+            boolean czySfeniczna = false;
 
             // ================== 1 ==================
 
-            for(int i = 2; i <= (int)Math.sqrt(number); i++) {
-                if(number % i == 0) {
-                    czyPierwsza = false;
-                    break;
-                }
-            }
+            czyPierwsza = isPrimeNum(number);
 
             // ================== 2 ==================
 
@@ -63,11 +73,57 @@ public class MainActivity extends AppCompatActivity {
 
             // ================== 4 ==================
 
+            String tempOriginal = numberObj.getText().toString().trim(), tempReversed = "";
 
+            for(int i = tempOriginal.length()-1; i >= 0; i--) {
+                tempReversed += tempOriginal.charAt(i);
+            }
+
+            if(tempOriginal.equals(tempReversed)) {
+                czyPalindromiczna = true;
+            }
+
+            // ================== 5 ==================
+
+            Vector<Integer> primeDivisors = new Vector();
+
+            if(number%2 == 0) {
+                primeDivisors.add(2);
+            }
+
+            for(int i = 3; i <= (int)Math.sqrt(number); i += 2) {
+                if(isPrimeNum(i)) {
+                    if(number % i == 0) {
+                        primeDivisors.add(i);
+                    }
+                }
+            }
+
+            if(primeDivisors.size() == 3) {
+                czySfeniczna = true;
+            }
+            /*else if (primeDivisors.size() > 3) {
+                for(int i = 0; i <= primeDivisors.size()-3; i++) {
+                    for(int j = i+1; j <= primeDivisors.size()-2; j++) {
+                        for(int k = j+1; k <= primeDivisors.size()-1; k++) {
+                            if(number == primeDivisors.elementAt(i)*primeDivisors.elementAt(j)*primeDivisors.elementAt(k)) {
+                                czySfeniczna = true;
+                                break;
+                            }
+                        }
+                        if(czySfeniczna) {
+                            break;
+                        }
+                    }
+                    if(czySfeniczna) {
+                        break;
+                    }
+                }
+            }*/
 
             // =======================================
 
-            String score = "Twoja liczba:\n";
+            String score = "Twoja liczba jest:\n";
 
             if(number == 1) {
                 score += "- ani pierwsza, ani złożona\n";
@@ -91,6 +147,20 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 score += "- niedoskonała\n";
+            }
+
+            if(czyPalindromiczna) {
+                score += "- palindromiczna\n";
+            }
+            else {
+                score += "- niepalindromiczna\n";
+            }
+
+            if(czySfeniczna) {
+                score += "- sfeniczna\n";
+            }
+            else {
+                score += "- niesfeniczna\n";
             }
 
             scoreObj.setText(score);

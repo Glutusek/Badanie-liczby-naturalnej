@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="70dp"
         android:orientation="horizontal"
-        android:id="@+id/numberLayout">
+        android:id="@+id/numberLayout"
+        android:layout_marginTop="50dp">
 
         <TextView
             android:layout_width="0dp"
@@ -40,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="70dp"
         android:layout_marginTop="30dp"
-        android:text="Twoja liczba:"
+        android:text="Twoja liczba jest:"
         android:id="@+id/score"
         android:textSize="20sp"
         android:layout_below="@id/button"/>
